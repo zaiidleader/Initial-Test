@@ -3,12 +3,14 @@
 Make an ReactNative app to demonstrate the following requirements:
 This is an social media application that can post a text information to internet anonymously and let the community engage that post, we will call it Postr
 
-**Requirements**
-     - Timeline or newsfeed screen
-     - Create a new post screen
-     - Reply to a post screen
 
-**The app must have 3 screens:**
+## Requirements
+
+- Timeline or newsfeed screen
+- Create a new post screen
+- Reply to a post screen
+
+## The app must have 3 screens:
   The app must have following abilities:
 
     - Every user will have unique and random handler (username)
@@ -52,10 +54,13 @@ In Progress
 
 
 Thank You
+
 Best Regards
 
 Zaini Jamathsani
+
 Mobile Apps Developer
 
 Email : dleader.zaii@gmail.com
+
 Phone : +6285694084870
