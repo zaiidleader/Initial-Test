@@ -53,6 +53,9 @@ We have bonus points if your application has this functionality: <br />
 - Run `npx react-native run-android` for android
 - Run `npx react-native run-ios` for ios
 
+## Link APK
+https://drive.google.com/file/d/157LYIcAxqdoE64DhzLNixkIK37YZ9_Zi/view?usp=sharing
+
 
 ## Screenshots
 <img src='https://i.ibb.co/rtsCZYb/Screenshot.png' width=800/>  
