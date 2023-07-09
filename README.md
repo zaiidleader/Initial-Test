@@ -55,7 +55,7 @@ We have bonus points if your application has this functionality: <br />
 
 
 ## Screenshots
-<img src='https://i.ibb.co/rtsCZYb/Screenshot.png' height=500/>  
+<img src='https://i.ibb.co/rtsCZYb/Screenshot.png' height=600 width=1000/>  
 
 
 ## Demo Video
