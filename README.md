@@ -1,8 +1,6 @@
 # React Native SDE Mini Project
 
-Make an ReactNative app to demonstrate the following requirements:
-This is an social media application that can post a text information to internet anonymously and let the community engage that post, we will call it Postr
-
+Make an ReactNative app to demonstrate the following requirements: This is an social media application that can post a text information to internet anonymously and let the community engage that post, we will call it Postr
 
 ## Requirements
 
@@ -29,6 +27,10 @@ As this is ReactNative role, you can use any mock api services and focus on your
 - Modal 11.5.3
 - Moment (parsing, validating, manipulating and displaying date/time in JavaScript)
 - Mobx (user state management)
+- Firebase (database)
+- Get Location 2.2.1
+- Localization (for feature change language)
+- Axios 0.18.0
 
 ## Run Locally
 
@@ -56,11 +58,8 @@ In Progress
 Thank You
 
 Best Regards
-
 Zaini Jamathsani
 
 Mobile Apps Developer
-
 Email : dleader.zaii@gmail.com
-
 Phone : +6285694084870
