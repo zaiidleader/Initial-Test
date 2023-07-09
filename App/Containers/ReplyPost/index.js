@@ -26,8 +26,12 @@ import CustomTextArea from '@CustomTextArea'
 import TextAvatar from 'react-native-text-avatar'
 import { username } from 'react-lorem-ipsum'
 
+import localizationId from 'moment/locale/id'
+import localizationEn from 'moment/locale/en-in'
+
 import MockDataUsers from '../../Helper/MockData/MOCK_DATA_USERS.json'
 import {database} from '../../Configs/firebase'
+import strings from '@Dictionary'
 
 import {
   postReply,
@@ -133,7 +137,12 @@ const ReplyPost = (props) => {
           <View style={styles.viewNameDate}>
             <View style={styles.viewSpace}>
               <Text style={styles.textName}>{state.item.fullname}</Text>
-              <Text style={styles.textDate}>{moment(state.item.created_at).fromNow()}</Text>
+                {
+                  state.language === 'en' ?
+                    <Text style={styles.textDate}>{moment(state.item.created_at).locale("en-in", localizationEn).fromNow()}</Text>
+                  :
+                    <Text style={styles.textDate}>{moment(state.item.created_at).locale("id", localizationId).fromNow()}</Text>
+                }
             </View>
             <Text style={[styles.textDate, {width: width * 0.7, marginTop: toDp(4)}]}>{state.item.location}</Text>
           </View>
@@ -157,7 +166,12 @@ const ReplyPost = (props) => {
             <View style={styles.viewNameDate}>
               <View style={styles.viewSpace}>
                 <Text style={styles.textName}>{item.fullname}</Text>
-                <Text style={styles.textDate}>{moment(item.created_at).fromNow()}</Text>
+                {
+                  state.language === 'en' ?
+                    <Text style={styles.textDate}>{moment(item.created_at).locale("en-in", localizationEn).fromNow()}</Text>
+                  :
+                    <Text style={styles.textDate}>{moment(item.created_at).locale("id", localizationId).fromNow()}</Text>
+                }
               </View>
               <Text style={[styles.textDate, {color: 'white',width: width * 0.7, marginTop: toDp(4)}]}>{item.description}</Text>
             </View>
@@ -177,7 +191,7 @@ const ReplyPost = (props) => {
           <TouchableOpacity style={styles.touchBack} onPress={() => props.navigation.goBack()}>
             <Image source={allLogo.icBack} style={styles.icBack} />
           </TouchableOpacity>
-          <Text style={styles.textTitle}>Reply</Text>
+          <Text style={styles.textTitle}>{strings.reply}</Text>
           <View style={styles.viewRight}>
 
           </View>
@@ -196,7 +210,7 @@ const ReplyPost = (props) => {
             <View style={{flex: 1}}>
               {renderHeader()}
               <View style={styles.viewLoadingCenter}>
-                <Text style={styles.textTitle}>Data Empty</Text>
+                <Text style={styles.textTitle}>{strings.dataEmpty}</Text>
               </View>
             </View>
           :
@@ -212,13 +226,13 @@ const ReplyPost = (props) => {
         <View style={styles.viewInput}>
           <CustomTextArea
             title={''}
-            placeholder={'Reply to '+state.item.fullname}
+            placeholder={strings.replyTo+' '+state.item.fullname}
             error={state.errorDesciption}
             value={state.desciption}
             onChangeText={(desciption) => {
               setState(state => ({...state, desciption}))
               if(desciption.trim() === '') {
-                setState(state => ({...state, errorDesciption: 'This field cannot be empty.'}))
+                setState(state => ({...state, errorDesciption: strings.errorEmtpy}))
               } else {
                 setState(state => ({...state, errorDesciption: ''}))
               }
@@ -234,7 +248,7 @@ const ReplyPost = (props) => {
       {
         state.desciption.length === 0 ?
           <View style={[styles.touchPost, {borderColor: 'grey'}]}>
-            <Text style={[styles.textPost, {color: 'grey'}]}>POST</Text>
+            <Text style={[styles.textPost, {color: 'grey'}]}>{strings.post}</Text>
           </View>
         :
           <TouchableOpacity style={styles.touchPost} onPress={() => post()}>
@@ -242,7 +256,7 @@ const ReplyPost = (props) => {
               state.loadingReply ?
                 <ActivityIndicator size="small" color="#269FE8" />
               :
-                <Text style={styles.textPost}>POST</Text>
+                <Text style={styles.textPost}>{strings.post}</Text>
             }
           </TouchableOpacity>
       }

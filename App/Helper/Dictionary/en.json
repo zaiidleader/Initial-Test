@@ -1,0 +1,12 @@
+{
+  "changeLanguage": "Change Language",
+  "like": "Like",
+  "comment": "Comment",
+  "newPost": "New Post",
+  "whatDo": "What do you think?",
+  "post": "POST",
+  "errorEmtpy": "This field cannot be empty.",
+  "reply": "Reply",
+  "dataEmpty": "Data Empty",
+  "replyTo": "Reply to",
+}

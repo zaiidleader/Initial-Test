@@ -36,7 +36,7 @@ const Homepage = (props) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar backgroundColor='white' barStyle={Platform.OS === 'ios' ? "light-content" : "dark-content"} />
+      <StatusBar backgroundColor='#181818' barStyle={"light-content"} />
       {
         Platform.OS === 'android' && <View style={{height: toDp(16)}} />
       }

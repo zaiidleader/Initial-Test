@@ -25,10 +25,13 @@ import LinearGradient from 'react-native-linear-gradient'
 
 import TextAvatar from 'react-native-text-avatar'
 import moment from 'moment'
+import localizationId from 'moment/locale/id'
+import localizationEn from 'moment/locale/en-in'
 
 import {getPosting}  from '@Apis'
 
 import {database} from '../../../Configs/firebase'
+import strings from '@Dictionary'
 
 const { width, height } = Dimensions.get('window')
 type Props = {}
@@ -39,6 +42,7 @@ const Home = (props) => {
     loading: true,
     modalVisible: false,
     arrayData: [],
+    language: strings.getLanguage(),
   })
 
   useEffect(() => {
@@ -67,6 +71,13 @@ const Home = (props) => {
     })
   }
 
+  const setLanguage = (language) => {
+    if(state.language !== language) {
+      strings.setLanguage(language)
+      setState(state => ({...state, language, modalVisible: false}))
+    }
+  }
+
   const renderModal = () => {
     return (
       <Modal
@@ -75,21 +86,37 @@ const Home = (props) => {
         style={styles.bottomModal}
       >
         <View style={styles.viewRootModal}>
-          <View style={[styles.modalBox, {backgroundColor: '#FFFFFF'}]}>
+          <View style={[styles.modalBox, {backgroundColor: '#181818'}]}>
             <View style={styles.viewCenter}>
               <View style={styles.lineModal} />
-              <Text style={styles.titleModal}>Post Filer</Text>
+              <Text style={styles.titleModal}>{strings.changeLanguage}</Text>
             </View>
-            <View style={styles.rowModal}>
-              <Text style={styles.textModal}>See your post on</Text>
-              <TouchableOpacity style={styles.touchButtonModal}>
-                <Text style={styles.textButtonModal}>All Post</Text>
+            <View style={styles.viewContent2}>
+              <TouchableOpacity
+                onPress={() => setLanguage('en')}
+                style={[styles.touchLanguage, {
+                  marginTop: toDp(30),
+                  backgroundColor: state.language === 'en' ? '#E7F6F2' : '#F2F3F3'
+                }]}>
+                  <Image source={allLogo.icUsa} style={styles.icLanguage} />
+                  <Text style={styles.textLanguange}>English</Text>
+                  {
+                    state.language === 'en' &&
+                    <Image source={allLogo.icEventApprove} style={styles.icCeklis} />
+                  }
               </TouchableOpacity>
-            </View>
-            <View style={[styles.rowModal, {marginTop: toDp(20)}]}>
-              <Text style={styles.textModal}>Privacy</Text>
-              <TouchableOpacity style={styles.touchButtonModal}>
-                <Text style={styles.textButtonModal}>Everyone</Text>
+              <TouchableOpacity
+                onPress={() => setLanguage('id')}
+                style={[styles.touchLanguage, {
+                  marginTop: toDp(16),
+                  backgroundColor: state.language === 'id' ? '#E7F6F2' : '#F2F3F3'
+                }]}>
+                <Image source={allLogo.icInd} style={styles.icLanguage} />
+                <Text style={styles.textLanguange}>Indonesia</Text>
+                  {
+                    state.language === 'id' &&
+                    <Image source={allLogo.icEventApprove} style={styles.icCeklis} />
+                  }
               </TouchableOpacity>
             </View>
           </View>
@@ -111,7 +138,12 @@ const Home = (props) => {
             <View style={styles.viewNameDate}>
               <View style={styles.viewSpace}>
                 <Text style={styles.textName}>{item.fullname}</Text>
-                <Text style={styles.textDate}>{moment(item.created_at).fromNow()}</Text>
+                {
+                  state.language === 'en' ?
+                    <Text style={styles.textDate}>{moment(item.created_at).locale("en-in", localizationEn).fromNow()}</Text>
+                  :
+                    <Text style={styles.textDate}>{moment(item.created_at).locale("id", localizationId).fromNow()}</Text>
+                }
               </View>
               <Text style={[styles.textDate, {width: width * 0.7, marginTop: toDp(4)}]}>{item.location}</Text>
             </View>
@@ -131,14 +163,18 @@ const Home = (props) => {
             </TouchableOpacity>
           </View>
           <View style={styles.viewComment}>
+
             {
-              item.count_comment >= 1 ?
-                <Text style={styles.textCommentsLike}>{item.count_comment+' Comments'}</Text>
+              state.language === 'en' ?
+                item.count_comment >= 1 ?
+                  <Text style={styles.textCommentsLike}>{item.count_comment+' Comments'}</Text>
+                :
+                  <Text style={styles.textCommentsLike}>{item.count_comment+' Comment'}</Text>
               :
-                <Text style={styles.textCommentsLike}>{item.count_comment+' Comment'}</Text>
+                <Text style={styles.textCommentsLike}>{item.count_comment+' '+strings.comment}</Text>
             }
             <View style={{width: toDp(12)}} />
-            <Text style={styles.textCommentsLike}>{item.count_like+' Like'}</Text>
+            <Text style={styles.textCommentsLike}>{item.count_like+' '+strings.like}</Text>
           </View>
         </View>
         <View style={styles.line} />
@@ -338,7 +374,7 @@ const styles = StyleSheet.create({
   },
   titleModal: {
     fontSize: toDp(16),
-    color: '#363636',
+    color: 'white',
     fontWeight: '700',
     marginTop: toDp(20)
   },
@@ -432,6 +468,36 @@ const styles = StyleSheet.create({
     height: toDp(24),
     tintColor: 'white'
   },
+
+  viewContent2: {
+    paddingHorizontal: toDp(16),
+    flex: 1
+  },
+  touchLanguage: {
+    width: '100%',
+    height: toDp(48),
+    backgroundColor: '#F2F3F3',
+    borderRadius: toDp(10),
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  icLanguage: {
+    width: toDp(24),
+    height: toDp(24),
+    marginLeft: toDp(12)
+  },
+  textLanguange: {
+    fontSize: toDp(16),
+    color: 'black',
+    marginLeft: toDp(16),
+  },
+  icCeklis: {
+    width: toDp(28),
+    height: toDp(28),
+    position: 'absolute',
+    right: toDp(12)
+  },
+
 
 
 })

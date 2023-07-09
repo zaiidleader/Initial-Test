@@ -28,6 +28,9 @@ const allLogo = {
   icMoreVertical: require('./img/ic_more_vertical.png'),
   icBack: require('./img/ic_back.png'),
   logo: require('./img/logo.png'),
+  icInd: require('./img/ic_ind.png'),
+  icUsa: require('./img/ic_usa.png'),
+  icEventApprove: require('./img/ic_event_approve.png'),
 
 }
 

@@ -27,6 +27,7 @@ import GetLocation from 'react-native-get-location'
 import { username } from 'react-lorem-ipsum'
 import MockDataUsers from '../../Helper/MockData/MOCK_DATA_USERS.json'
 
+import strings from '@Dictionary'
 import {
   getGeocode,
   postPosting
@@ -98,7 +99,7 @@ const NewPost = (props) => {
           <TouchableOpacity style={styles.touchBack} onPress={() => props.navigation.goBack()}>
             <Image source={allLogo.icBack} style={styles.icBack} />
           </TouchableOpacity>
-          <Text style={styles.textTitle}>New Post</Text>
+          <Text style={styles.textTitle}>{strings.newPost}</Text>
           <View style={styles.viewRight}>
 
           </View>
@@ -109,14 +110,14 @@ const NewPost = (props) => {
 
       <View style={styles.viewSearch}>
         <CustomTextArea
-          title={'New Post'}
-          placeholder={'What do you think?'}
+          title={strings.newPost}
+          placeholder={strings.whatDo}
           error={state.errorDesciption}
           value={state.desciption}
           onChangeText={(desciption) => {
             setState(state => ({...state, desciption}))
             if(desciption.trim() === '') {
-              setState(state => ({...state, errorDesciption: 'This field cannot be empty.'}))
+              setState(state => ({...state, errorDesciption: strings.errorEmtpy}))
             } else {
               setState(state => ({...state, errorDesciption: ''}))
             }
@@ -130,7 +131,7 @@ const NewPost = (props) => {
       {
         state.desciption.length === 0 ?
           <View style={[styles.touchPost, {borderColor: 'grey'}]}>
-            <Text style={[styles.textPost, {color: 'grey'}]}>POST</Text>
+            <Text style={[styles.textPost, {color: 'grey'}]}>{strings.post}</Text>
           </View>
         :
           <TouchableOpacity style={styles.touchPost} onPress={() => post()}>
@@ -138,7 +139,7 @@ const NewPost = (props) => {
               state.loading ?
                 <ActivityIndicator size="small" color="#269FE8" />
               :
-                <Text style={styles.textPost}>POST</Text>
+                <Text style={styles.textPost}>{strings.post}</Text>
             }
           </TouchableOpacity>
       }
