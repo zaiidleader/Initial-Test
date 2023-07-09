@@ -54,7 +54,7 @@ We have bonus points if your application has this functionality: <br />
 - Run `npx react-native run-ios` for ios
 
 ## Link APK
-https://drive.google.com/file/d/157LYIcAxqdoE64DhzLNixkIK37YZ9_Zi/view?usp=sharing
+https://drive.google.com/file/d/1ga4KxaXdZmYgisVZO-kvat5Qzyl49hwD/view?usp=sharing
 
 
 ## Screenshots
