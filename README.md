@@ -20,6 +20,12 @@ Make an ReactNative app to demonstrate the following requirements:
 
 As this is ReactNative role, you can use any mock api services and focus on your ReactNative code. You can use any UI-Kit or just plain UI.
 
+## Bonus Points
+We have bonus points if your application has this functionality: <br />
+- The application has offline and resume capabilities because of bad network connectivity.
+<br />For example: users at rural areas, low data package, or just sudden no network connectivity
+- Record users’ longitude and latitude for each post
+
 
 ## Tech Stack
 
