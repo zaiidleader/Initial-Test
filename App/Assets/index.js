@@ -31,6 +31,7 @@ const allLogo = {
   icInd: require('./img/ic_ind.png'),
   icUsa: require('./img/ic_usa.png'),
   icEventApprove: require('./img/ic_event_approve.png'),
+  imgNoConnection: require('./img/img_no_connection.png'),
 
 }
 

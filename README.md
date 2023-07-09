@@ -32,6 +32,7 @@ As this is ReactNative role, you can use any mock api services and focus on your
 - Get Location 2.2.1
 - Localization (for feature change language)
 - Axios 0.18.0
+- Netinfo (for check connection internet)
 
 ## Run Locally
 

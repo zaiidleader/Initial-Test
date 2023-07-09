@@ -21,6 +21,9 @@ import {
 import { allLogo } from '@Assets'
 import { toDp } from '@percentageToDP'
 
+import {useNetInfo} from "@react-native-community/netinfo";
+import NoConnection from '@NoConnection'
+
 import moment from 'moment'
 import CustomTextReply from '@CustomTextReply'
 import TextAvatar from 'react-native-text-avatar'
@@ -43,6 +46,7 @@ const { width, height } = Dimensions.get('window')
 type Props = {}
 const ReplyPost = (props) => {
 
+  const netInfo = useNetInfo();
   const [state, setState] = useState({
     item: props.navigation.state.params.item,
     loading: true,
@@ -201,6 +205,9 @@ const ReplyPost = (props) => {
       <View style={styles.line} />
 
       {
+        !netInfo.isConnected ?
+          <NoConnection />
+        :
         state.loading ?
           <View style={styles.viewLoadingCenter}>
             <ActivityIndicator size="large" color="white" />
@@ -222,44 +229,46 @@ const ReplyPost = (props) => {
           />
       }
 
-      <View style={styles.viewCustomFooter}>
-        <View style={styles.viewInput}>
-          <CustomTextReply
-            title={''}
-            placeholder={strings.replyTo+' '+state.item.fullname}
-            error={state.errorDesciption}
-            value={state.desciption}
-            onChangeText={(desciption) => {
-              setState(state => ({...state, desciption}))
-              if(desciption.trim() === '') {
-                setState(state => ({...state, errorDesciption: strings.errorEmtpy}))
-              } else {
-                setState(state => ({...state, errorDesciption: ''}))
-              }
-            }}
-            autoCapitalize={'sentences'}
-            returnKeyType={'next'}
-            maxLength={100}
-          />
+      {
+        netInfo.isConnected &&
+        <View style={styles.viewCustomFooter}>
+          <View style={styles.viewInput}>
+            <CustomTextReply
+              title={''}
+              placeholder={strings.replyTo+' '+state.item.fullname}
+              error={state.errorDesciption}
+              value={state.desciption}
+              onChangeText={(desciption) => {
+                setState(state => ({...state, desciption}))
+                if(desciption.trim() === '') {
+                  setState(state => ({...state, errorDesciption: strings.errorEmtpy}))
+                } else {
+                  setState(state => ({...state, errorDesciption: ''}))
+                }
+              }}
+              autoCapitalize={'sentences'}
+              returnKeyType={'next'}
+              maxLength={100}
+            />
+          </View>
+          <View style={{width: toDp(16)}} />
+          {
+            state.desciption.length === 0 ?
+              <View style={[styles.touchPost, {borderColor: '#F6F7F4', height: Platform.OS === 'ios' ? toDp(48) : toDp(60)}]}>
+                <Text style={[styles.textPost, {color: '#F6F7F4'}]}>{strings.post}</Text>
+              </View>
+            :
+              <TouchableOpacity style={[styles.touchPost, {height: Platform.OS === 'ios' ? toDp(48) : toDp(60)}]} onPress={() => post()}>
+                {
+                  state.loadingReply ?
+                    <ActivityIndicator size="small" color="#269FE8" />
+                  :
+                    <Text style={styles.textPost}>{strings.post}</Text>
+                }
+              </TouchableOpacity>
+          }
         </View>
-        <View style={{width: toDp(16)}} />
-        {
-          state.desciption.length === 0 ?
-            <View style={[styles.touchPost, {borderColor: '#F6F7F4', height: Platform.OS === 'ios' ? toDp(48) : toDp(60)}]}>
-              <Text style={[styles.textPost, {color: '#F6F7F4'}]}>{strings.post}</Text>
-            </View>
-          :
-            <TouchableOpacity style={[styles.touchPost, {height: Platform.OS === 'ios' ? toDp(48) : toDp(60)}]} onPress={() => post()}>
-              {
-                state.loadingReply ?
-                  <ActivityIndicator size="small" color="#269FE8" />
-                :
-                  <Text style={styles.textPost}>{strings.post}</Text>
-              }
-            </TouchableOpacity>
-        }
-      </View>
-
+      }
 
     </SafeAreaView>
   )

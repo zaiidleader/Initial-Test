@@ -23,6 +23,9 @@ import Modal from 'react-native-modal'
 import NavigatorService from '@NavigatorService'
 import LinearGradient from 'react-native-linear-gradient'
 
+import {useNetInfo} from "@react-native-community/netinfo";
+import NoConnection from '@NoConnection'
+
 import TextAvatar from 'react-native-text-avatar'
 import moment from 'moment'
 import localizationId from 'moment/locale/id'
@@ -37,6 +40,7 @@ const { width, height } = Dimensions.get('window')
 type Props = {}
 const Home = (props) => {
 
+  const netInfo = useNetInfo();
   const refToast = useRef()
   const [state, setState] = useState({
     loading: true,
@@ -203,6 +207,9 @@ const Home = (props) => {
     <View style={styles.container}>
       {renderModal()}
       {
+        !netInfo.isConnected ?
+          <NoConnection />
+        :
         state.loading ?
           <View style={styles.viewLoadingCenter}>
             <ActivityIndicator size="large" color="white" />
@@ -215,9 +222,12 @@ const Home = (props) => {
             ListFooterComponent={() => <View style={{height: toDp(24)}} />}
           />
       }
-      <TouchableOpacity style={styles.touchFab} onPress={() => NavigatorService.navigate('NewPost') }>
-        <Image source={allLogo.fab} style={styles.fab} />
-      </TouchableOpacity>
+      {
+        netInfo.isConnected &&
+        <TouchableOpacity style={styles.touchFab} onPress={() => NavigatorService.navigate('NewPost') }>
+          <Image source={allLogo.fab} style={styles.fab} />
+        </TouchableOpacity>
+      }
     </View>
   )
 }
@@ -497,7 +507,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: toDp(12)
   },
-
 
 
 })

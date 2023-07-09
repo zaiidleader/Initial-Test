@@ -21,6 +21,9 @@ import {
 import { allLogo } from '@Assets'
 import { toDp } from '@percentageToDP'
 
+import {useNetInfo} from "@react-native-community/netinfo";
+import NoConnection from '@NoConnection'
+
 import CustomTextArea from '@CustomTextArea'
 import GetLocation from 'react-native-get-location'
 
@@ -37,6 +40,7 @@ const { width, height } = Dimensions.get('window')
 type Props = {}
 const NewPost = (props) => {
 
+  const netInfo = useNetInfo();
   const [state, setState] = useState({
     loading: false,
     search: '',
@@ -108,40 +112,48 @@ const NewPost = (props) => {
 
       <View style={styles.line} />
 
-      <View style={styles.viewSearch}>
-        <CustomTextArea
-          title={strings.newPost}
-          placeholder={strings.whatDo}
-          error={state.errorDesciption}
-          value={state.desciption}
-          onChangeText={(desciption) => {
-            setState(state => ({...state, desciption}))
-            if(desciption.trim() === '') {
-              setState(state => ({...state, errorDesciption: strings.errorEmtpy}))
-            } else {
-              setState(state => ({...state, errorDesciption: ''}))
-            }
-          }}
-          autoCapitalize={'sentences'}
-          returnKeyType={'next'}
-          maxLength={100}
-        />
-      </View>
+      {
+        !netInfo.isConnected ?
+          <NoConnection />
+        :
+        <View style={styles.viewSearch}>
+          <CustomTextArea
+            title={strings.newPost}
+            placeholder={strings.whatDo}
+            error={state.errorDesciption}
+            value={state.desciption}
+            onChangeText={(desciption) => {
+              setState(state => ({...state, desciption}))
+              if(desciption.trim() === '') {
+                setState(state => ({...state, errorDesciption: strings.errorEmtpy}))
+              } else {
+                setState(state => ({...state, errorDesciption: ''}))
+              }
+            }}
+            autoCapitalize={'sentences'}
+            returnKeyType={'next'}
+            maxLength={100}
+          />
+        </View>
+      }
 
       {
-        state.desciption.length === 0 ?
-          <View style={[styles.touchPost, {borderColor: '#F6F7F4'}]}>
-            <Text style={[styles.textPost, {color: '#F6F7F4'}]}>{strings.post}</Text>
-          </View>
+        netInfo.isConnected ?
+          state.desciption.length === 0 ?
+            <View style={[styles.touchPost, {borderColor: '#F6F7F4'}]}>
+              <Text style={[styles.textPost, {color: '#F6F7F4'}]}>{strings.post}</Text>
+            </View>
+          :
+            <TouchableOpacity style={styles.touchPost} onPress={() => post()}>
+              {
+                state.loading ?
+                  <ActivityIndicator size="small" color="#269FE8" />
+                :
+                  <Text style={styles.textPost}>{strings.post}</Text>
+              }
+            </TouchableOpacity>
         :
-          <TouchableOpacity style={styles.touchPost} onPress={() => post()}>
-            {
-              state.loading ?
-                <ActivityIndicator size="small" color="#269FE8" />
-              :
-                <Text style={styles.textPost}>{strings.post}</Text>
-            }
-          </TouchableOpacity>
+          <View />
       }
 
 
