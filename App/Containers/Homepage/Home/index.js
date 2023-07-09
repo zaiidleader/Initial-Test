@@ -171,7 +171,7 @@ const Home = (props) => {
             </TouchableOpacity>
           </View>
           <View style={styles.viewComment}>
-
+            <TouchableOpacity onPress={() => NavigatorService.navigate('ReplyPost', {item})}>
             {
               state.language === 'en' ?
                 item.count_comment >= 1 ?
@@ -181,6 +181,7 @@ const Home = (props) => {
               :
                 <Text style={styles.textCommentsLike}>{item.count_comment+' '+strings.comment}</Text>
             }
+            </TouchableOpacity>
             <View style={{width: toDp(12)}} />
             <Text style={styles.textCommentsLike}>{item.count_like+' '+strings.like}</Text>
           </View>
