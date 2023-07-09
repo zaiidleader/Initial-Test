@@ -55,23 +55,27 @@ const Home = (props) => {
 
   const realtimePosting = () => {
     database.ref('/posting').on('value', querySnapShot => {
-      let keys = Object.keys(querySnapShot.val());
-      let data = Object.values(querySnapShot.val());
-      let arrayData = []
-      for (var i = 0; i < data.length; i++) {
-        arrayData.unshift({
-          id: data[i].id,
-          id_post: keys[i],
-          fullname: data[i].fullname,
-          image_url: data[i].image_url,
-          description: data[i].description,
-          created_at: data[i].created_at,
-          location: data[i].location,
-          count_comment: data[i].count_comment,
-          count_like: data[i].count_like,
-        })
+      if(querySnapShot.val() !== null) {
+        let keys = Object.keys(querySnapShot.val());
+        let data = Object.values(querySnapShot.val());
+        let arrayData = []
+        for (var i = 0; i < data.length; i++) {
+          arrayData.unshift({
+            id: data[i].id,
+            id_post: keys[i],
+            fullname: data[i].fullname,
+            image_url: data[i].image_url,
+            description: data[i].description,
+            created_at: data[i].created_at,
+            location: data[i].location,
+            count_comment: data[i].count_comment,
+            count_like: data[i].count_like,
+          })
+        }
+        setState(state => ({...state, arrayData, loading: false}))
+      } else {
+        setState(state => ({...state, arrayData: [], loading: false}))
       }
-      setState(state => ({...state, arrayData, loading: false}))
     })
   }
 

@@ -25,7 +25,7 @@ const SplashScreen = () => {
   useEffect(() => {
     setTimeout(function () {
       NavigatorService.reset('Homepage')
-    }, 500);
+    }, 2500);
   }, [])
 
   return (

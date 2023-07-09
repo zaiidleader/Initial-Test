@@ -65,14 +65,18 @@ const ReplyPost = (props) => {
 
   const realtimeReply = () => {
     database.ref('/reply').on('value', querySnapShot => {
-      let data = Object.values(querySnapShot.val());
-      let arrayData = []
-      for (var i = 0; i < data.length; i++) {
-        if(data[i].id_post === props.navigation.state.params.item.id_post) {
-          arrayData.unshift(data[i])
+      if(querySnapShot.val() !== null) {
+        let data = Object.values(querySnapShot.val());
+        let arrayData = []
+        for (var i = 0; i < data.length; i++) {
+          if(data[i].id_post === props.navigation.state.params.item.id_post) {
+            arrayData.unshift(data[i])
+          }
         }
+        setState(state => ({...state, arrayData, loading: false}))
+      } else {
+        setState(state => ({...state, arrayData: [], loading: false}))
       }
-      setState(state => ({...state, arrayData, loading: false}))
     })
   }
 
