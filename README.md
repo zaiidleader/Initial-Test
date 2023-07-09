@@ -43,7 +43,7 @@ As this is ReactNative role, you can use any mock api services and focus on your
 
 ### Step 2
 - Run `npx react-native run-android` for android
-Run `npx react-native run-ios` for ios
+- Run `npx react-native run-ios` for ios
 
 
 ## Screenshots
@@ -56,10 +56,10 @@ In Progress
 
 
 Thank You
-
+<br />
 Best Regards
 Zaini Jamathsani
-
-Mobile Apps Developer
-Email : dleader.zaii@gmail.com
+<br />
+Mobile Apps Developer<br />
+Email : dleader.zaii@gmail.com<br />
 Phone : +6285694084870
