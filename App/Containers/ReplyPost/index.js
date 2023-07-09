@@ -22,7 +22,7 @@ import { allLogo } from '@Assets'
 import { toDp } from '@percentageToDP'
 
 import moment from 'moment'
-import CustomTextArea from '@CustomTextArea'
+import CustomTextReply from '@CustomTextReply'
 import TextAvatar from 'react-native-text-avatar'
 import { username } from 'react-lorem-ipsum'
 
@@ -184,7 +184,7 @@ const ReplyPost = (props) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar backgroundColor='white' barStyle="light-content" />
+      <StatusBar backgroundColor='#181818' barStyle={"light-content"} />
 
       <View style={styles.header}>
         <View style={styles.viewHeader}>
@@ -222,9 +222,9 @@ const ReplyPost = (props) => {
           />
       }
 
-      <View style={{alignItems: 'center'}}>
+      <View style={styles.viewCustomFooter}>
         <View style={styles.viewInput}>
-          <CustomTextArea
+          <CustomTextReply
             title={''}
             placeholder={strings.replyTo+' '+state.item.fullname}
             error={state.errorDesciption}
@@ -242,24 +242,23 @@ const ReplyPost = (props) => {
             maxLength={100}
           />
         </View>
+        <View style={{width: toDp(16)}} />
+        {
+          state.desciption.length === 0 ?
+            <View style={[styles.touchPost, {borderColor: '#F6F7F4', height: Platform.OS === 'ios' ? toDp(48) : toDp(60)}]}>
+              <Text style={[styles.textPost, {color: '#F6F7F4'}]}>{strings.post}</Text>
+            </View>
+          :
+            <TouchableOpacity style={[styles.touchPost, {height: Platform.OS === 'ios' ? toDp(48) : toDp(60)}]} onPress={() => post()}>
+              {
+                state.loadingReply ?
+                  <ActivityIndicator size="small" color="#269FE8" />
+                :
+                  <Text style={styles.textPost}>{strings.post}</Text>
+              }
+            </TouchableOpacity>
+        }
       </View>
-
-
-      {
-        state.desciption.length === 0 ?
-          <View style={[styles.touchPost, {borderColor: 'grey'}]}>
-            <Text style={[styles.textPost, {color: 'grey'}]}>{strings.post}</Text>
-          </View>
-        :
-          <TouchableOpacity style={styles.touchPost} onPress={() => post()}>
-            {
-              state.loadingReply ?
-                <ActivityIndicator size="small" color="#269FE8" />
-              :
-                <Text style={styles.textPost}>{strings.post}</Text>
-            }
-          </TouchableOpacity>
-      }
 
 
     </SafeAreaView>
@@ -380,22 +379,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#E2E2E23D',
     marginBottom: toDp(16)
   },
-  touchPost: {
-    width: '92.5%',
-    height: toDp(48),
-    marginHorizontal: toDp(16),
-    borderWidth: toDp(2),
-    borderColor: '#269FE8',
-    marginTop: toDp(68),
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: toDp(4)
-  },
-  textPost: {
-    fontSize: toDp(16),
-    color: '#269FE8',
-    fontWeight: 'bold'
-  },
+
   viewSpace: {
     width: width * 0.8,
     justifyContent: 'space-between',
@@ -435,10 +419,33 @@ const styles = StyleSheet.create({
     borderRadius: toDp(24),
     marginTop: toDp(4)
   },
+
   viewInput: {
-    width: '92%',
+    //width: '9',
+    flex: 1,
     alignItems: 'center'
-  }
+  },
+  viewCustomFooter: {
+    flexDirection: 'row',
+    //alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: toDp(16),
+    marginTop: toDp(8),
+  },
+  touchPost: {
+    width: toDp(100),
+    height: toDp(48),
+    borderWidth: toDp(1),
+    borderColor: '#269FE8',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: toDp(4)
+  },
+  textPost: {
+    fontSize: toDp(16),
+    color: '#269FE8',
+    fontWeight: 'bold'
+  },
 
 })
 

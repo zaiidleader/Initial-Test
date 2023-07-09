@@ -30,7 +30,7 @@ const SplashScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar backgroundColor='white' barStyle="light-content" />
+      <StatusBar backgroundColor='#181818' barStyle={"light-content"} />
       <View style={styles.viewContent}>
         <Image source={allLogo.logo} style={styles.logo} />
       </View>

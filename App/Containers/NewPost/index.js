@@ -92,7 +92,7 @@ const NewPost = (props) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar backgroundColor='white' barStyle="light-content" />
+      <StatusBar backgroundColor='#181818' barStyle={"light-content"} />
 
       <View style={styles.header}>
         <View style={styles.viewHeader}>
@@ -130,8 +130,8 @@ const NewPost = (props) => {
 
       {
         state.desciption.length === 0 ?
-          <View style={[styles.touchPost, {borderColor: 'grey'}]}>
-            <Text style={[styles.textPost, {color: 'grey'}]}>{strings.post}</Text>
+          <View style={[styles.touchPost, {borderColor: '#F6F7F4'}]}>
+            <Text style={[styles.textPost, {color: '#F6F7F4'}]}>{strings.post}</Text>
           </View>
         :
           <TouchableOpacity style={styles.touchPost} onPress={() => post()}>
@@ -271,7 +271,7 @@ const styles = StyleSheet.create({
     width: '92.5%',
     height: toDp(48),
     marginHorizontal: toDp(16),
-    borderWidth: toDp(2),
+    borderWidth: toDp(1),
     borderColor: '#269FE8',
     marginTop: Platform.OS === 'ios' ? toDp(92) : toDp(128),
     justifyContent: 'center',
