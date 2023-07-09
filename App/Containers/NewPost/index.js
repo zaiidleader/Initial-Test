@@ -24,6 +24,9 @@ import { toDp } from '@percentageToDP'
 import CustomTextArea from '@CustomTextArea'
 import GetLocation from 'react-native-get-location'
 
+import { username } from 'react-lorem-ipsum'
+import MockDataUsers from '../../Helper/MockData/MOCK_DATA_USERS.json'
+
 import {
   getGeocode,
   postPosting
@@ -64,43 +67,12 @@ const NewPost = (props) => {
     })
   }
 
-  const renderItem = ({item, index}) => {
-    return (
-      <View style={styles.containerItem}>
-        <View style={styles.viewUser}>
-          <Image source={{uri: item.user_image}} style={styles.userImage} />
-          <View style={styles.viewNameDate}>
-            <Text style={styles.textName}>{item.name}</Text>
-            <Text style={styles.textDate}>{item.message}</Text>
-          </View>
-        </View>
-        <View style={styles.viewTime}>
-          <Text style={styles.textTime}>{item.time}</Text>
-          {
-            item.notif !== 0 &&
-            <View style={styles.viewNotif}>
-              <Text style={styles.textNotif}>{item.notif}</Text>
-            </View>
-          }
-        </View>
-      </View>
-    )
-  }
-
-  const randomNameGenerator = num => {
-   let res = '';
-   for(let i = 0; i < num; i++){
-      const random = Math.floor(Math.random() * 27);
-      res += String.fromCharCode(97 + random);
-   };
-   return res;
- };
-
   const post = () => {
     setState(state => ({...state, loading: true}))
     let data = {
       "id": Math.floor((Math.random() * 100) + 1),
-      "fullname": randomNameGenerator(10),
+      "fullname": username(),
+      "image_url": MockDataUsers[Math.floor((Math.random() * 28) + 1)].image_url,
       "created_at": new Date(),
       "description": state.desciption,
       "location": state.location,
@@ -110,7 +82,6 @@ const NewPost = (props) => {
     postPosting(data).then(response => {
       console.log('response', response);
       setState(state => ({...state, loading: false}))
-      props.navigation.state.params.loadPosting()
       props.navigation.goBack()
     }).catch(error => {
       console.log('error', error);
@@ -301,7 +272,7 @@ const styles = StyleSheet.create({
     marginHorizontal: toDp(16),
     borderWidth: toDp(2),
     borderColor: '#269FE8',
-    marginTop: toDp(92),
+    marginTop: Platform.OS === 'ios' ? toDp(92) : toDp(128),
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: toDp(4)

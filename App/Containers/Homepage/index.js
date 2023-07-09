@@ -33,67 +33,13 @@ const Homepage = (props) => {
     modalVisibleMenu: false,
   })
 
-  const renderMenu = () => {
-    return (
-      <Modal
-        onBackdropPress={() => setState(state => ({...state, modalVisibleMenu: false}))}
-        isVisible={state.modalVisibleMenu}
-        style={styles.leftModal}
-        animationIn="slideInLeft"
-        animationOut="slideOutLeft"
-        coverScreen={false}
-      >
-        <View style={styles.containerModal}>
-          {
-            Platform.OS === 'ios' ? <View style={{height: toDp(50), backgroundColor: 'white'}} /> :
-            <View style={{height: toDp(26), backgroundColor: 'white'}} />
-          }
-          <View style={styles.headerModal}>
-            <View style={styles.viewUser}>
-              <Image source={{uri: 'https://i.ibb.co/jvS0tL7/user-02.png'}} style={styles.userImage} />
-              <View style={styles.viewNameDate}>
-                <Text style={styles.textName}>Andrew Jones</Text>
-                <Text style={styles.textProfile}>View my profile</Text>
-              </View>
-            </View>
-            <TouchableOpacity style={styles.touchClose} onPress={() => setState(state => ({...state, modalVisibleMenu: false}))}>
-              <Image source={allLogo.icClose} style={styles.icClose} />
-            </TouchableOpacity>
-          </View>
-          <TouchableOpacity style={styles.touchEmergency}>
-            <Image source={allLogo.icEmergency} style={styles.icEmergency} />
-            <Text style={styles.textEmergency}>Emergency Button</Text>
-          </TouchableOpacity>
-          <View>
-            <View style={{height: toDp(8)}} />
-            <TouchableOpacity style={styles.touchMenuModal}>
-              <Image source={allLogo.icInvoice} style={styles.iconModal} />
-              <Text style={styles.textModal}>Invoice</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.touchMenuModal}>
-              <Image source={allLogo.icDelivery} style={styles.iconModal} />
-              <Text style={styles.textModal}>Delivery Note</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.touchMenuModal}>
-              <Image source={allLogo.icBuilding} style={styles.iconModal} />
-              <Text style={styles.textModal}>Building Management Contacts</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.touchMenuModal}>
-              <Image source={allLogo.icSettings} style={styles.iconModal} />
-              <Text style={styles.textModal}>Settings</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-
-      </Modal>
-    )
-  }
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar backgroundColor='white' barStyle="light-content" />
-      {renderMenu()}
-
+      <StatusBar backgroundColor='white' barStyle={Platform.OS === 'ios' ? "light-content" : "dark-content"} />
+      {
+        Platform.OS === 'android' && <View style={{height: toDp(16)}} />
+      }
       <View style={styles.content}>
         <Home />
       </View>

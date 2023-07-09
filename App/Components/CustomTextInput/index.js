@@ -11,7 +11,7 @@ class CustomTextArea extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      darkMode: false
+      darkMode: false,
     }
   }
 
@@ -49,7 +49,7 @@ class CustomTextArea extends Component {
             underlineColorAndroid={'transparent'}
             value={value}
             secureTextEntry={secureTextEntry}
-            style={[styles.textInput, {color: this.state.darkMode ? 'white' : '#383B34'}]}
+            style={[styles.textInput, {color: 'white'}]}
             placeholder={placeholder}
             placeholderTextColor={'grey'}
             {...this.props}
@@ -58,7 +58,10 @@ class CustomTextArea extends Component {
             textAlignVertical={'top'}
           />
         </View>
-        {error !== '' && <Text style={styles.textError}>{error}</Text>}
+        <View style={styles.viewFooter}>
+          {error !== '' ? <Text style={styles.textError}>{error}</Text> : <View />}
+          <Text style={styles.textCount}>{value.length} / 100</Text>
+        </View>
       </View>
     )
   }
@@ -79,19 +82,20 @@ const styles = StyleSheet.create({
   viewText: {
     width: '100%',
     borderRadius: toDp(8),
-    backgroundColor: '#F6F7F4',
-    paddingHorizontal: toDp(10)
+    //backgroundColor: '#F6F7F4',
+    paddingHorizontal: toDp(10),
+    borderWidth: toDp(1),
+    borderColor: '#F6F7F4'
   },
   textInput: {
     flex: 1,
     fontSize: toDp(16),
-    color: '#273238',
+    color: 'white',
     marginHorizontal: Platform.OS === 'android' ? toDp(-4) : 0,
     marginTop: toDp(8),
     fontWeight: '400',
   },
   textError: {
-    marginTop: toDp(4),
     fontSize: toDp(14),
     color: '#F5493C',
     letterSpacing: toDp(0.05)
@@ -116,6 +120,14 @@ const styles = StyleSheet.create({
     height: toDp(20),
     tintColor: '#B0BEC5',
     resizeMode: 'contain'
+  },
+  viewFooter: {
+    marginTop: toDp(4),
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  textCount: {
+    color: 'white'
   }
 })
 

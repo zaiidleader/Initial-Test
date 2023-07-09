@@ -26,9 +26,9 @@ import LinearGradient from 'react-native-linear-gradient'
 import TextAvatar from 'react-native-text-avatar'
 import moment from 'moment'
 
-import {
-  getPosting
-}  from '@Apis'
+import {getPosting}  from '@Apis'
+
+import {database} from '../../../Configs/firebase'
 
 const { width, height } = Dimensions.get('window')
 type Props = {}
@@ -42,22 +42,61 @@ const Home = (props) => {
   })
 
   useEffect(() => {
-    loadPosting()
+    realtimePosting()
   }, [])
 
-  const loadPosting = () => {
-    getPosting().then(response => {
-      console.log('response', response);
-      let data = Object.values(response.data);
+  const realtimePosting = () => {
+    database.ref('/posting').on('value', querySnapShot => {
+      let keys = Object.keys(querySnapShot.val());
+      let data = Object.values(querySnapShot.val());
       let arrayData = []
       for (var i = 0; i < data.length; i++) {
-        arrayData.unshift(data[i])
+        arrayData.unshift({
+          id: data[i].id,
+          id_post: keys[i],
+          fullname: data[i].fullname,
+          image_url: data[i].image_url,
+          description: data[i].description,
+          created_at: data[i].created_at,
+          location: data[i].location,
+          count_comment: data[i].count_comment,
+          count_like: data[i].count_like,
+        })
       }
       setState(state => ({...state, arrayData, loading: false}))
-    }).catch(error => {
-      console.log('error', error);
-      setState(state => ({...state, loading: false}))
     })
+  }
+
+  const renderModal = () => {
+    return (
+      <Modal
+        onBackdropPress={() => setState(state => ({...state, modalVisible: false}))}
+        isVisible={state.modalVisible}
+        style={styles.bottomModal}
+      >
+        <View style={styles.viewRootModal}>
+          <View style={[styles.modalBox, {backgroundColor: '#FFFFFF'}]}>
+            <View style={styles.viewCenter}>
+              <View style={styles.lineModal} />
+              <Text style={styles.titleModal}>Post Filer</Text>
+            </View>
+            <View style={styles.rowModal}>
+              <Text style={styles.textModal}>See your post on</Text>
+              <TouchableOpacity style={styles.touchButtonModal}>
+                <Text style={styles.textButtonModal}>All Post</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={[styles.rowModal, {marginTop: toDp(20)}]}>
+              <Text style={styles.textModal}>Privacy</Text>
+              <TouchableOpacity style={styles.touchButtonModal}>
+                <Text style={styles.textButtonModal}>Everyone</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+
+      </Modal>
+    )
   }
 
   const renderItem = ({item, index}) => {
@@ -65,14 +104,10 @@ const Home = (props) => {
       <View style={styles.containerItem}>
         <View style={styles.header}>
           <View style={styles.viewUser}>
-            <TextAvatar
-              backgroundColor={'#25303E'}
-              textColor={'white'}
-              size={toDp(48)}
-              type={'circle'}
-            >
-              {item.fullname}
-            </TextAvatar>
+            <Image
+              style={styles.imageUrl}
+              source={{uri: item.image_url}}
+            />
             <View style={styles.viewNameDate}>
               <View style={styles.viewSpace}>
                 <Text style={styles.textName}>{item.fullname}</Text>
@@ -88,7 +123,7 @@ const Home = (props) => {
             <TouchableOpacity style={styles.touchRow}>
               <Image source={allLogo.icLike} style={styles.icLike} />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.touchRow}>
+            <TouchableOpacity style={styles.touchRow} onPress={() => NavigatorService.navigate('ReplyPost', {item})}>
               <Image source={allLogo.icComment} style={styles.icComment} />
             </TouchableOpacity>
             <TouchableOpacity style={styles.touchRow}>
@@ -114,16 +149,23 @@ const Home = (props) => {
   const renderHeader = () => {
     return (
       <View style={styles.viewHeaderCustom}>
-        <Image
-          source={{uri: 'https://cdn4.iconfinder.com/data/icons/logos-3/600/React.js_logo-1024.png'}}
-          style={styles.logoHeader}
-        />
+        <TouchableOpacity style={[styles.touchMore, {marginLeft: toDp(8)}]}>
+          <Image source={allLogo.icMenu} style={styles.icMore} />
+        </TouchableOpacity>
+        <Image source={allLogo.logo} style={styles.logoHeader} />
+        <TouchableOpacity
+          onPress={() => setState(state => ({...state, modalVisible: true}))}
+          style={[styles.touchMore, {marginRight: toDp(8)}]}
+        >
+          <Image source={allLogo.icMore} style={styles.icMore} />
+        </TouchableOpacity>
       </View>
     )
   }
 
   return (
     <View style={styles.container}>
+      {renderModal()}
       {
         state.loading ?
           <View style={styles.viewLoadingCenter}>
@@ -137,7 +179,7 @@ const Home = (props) => {
             ListFooterComponent={() => <View style={{height: toDp(24)}} />}
           />
       }
-      <TouchableOpacity style={styles.touchFab} onPress={() => NavigatorService.navigate('NewPost', {loadPosting}) }>
+      <TouchableOpacity style={styles.touchFab} onPress={() => NavigatorService.navigate('NewPost') }>
         <Image source={allLogo.fab} style={styles.fab} />
       </TouchableOpacity>
     </View>
@@ -168,13 +210,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginHorizontal: toDp(16)
   },
-  userImage: {
-    width: toDp(50),
-    height: toDp(50)
-  },
-  viewNameDate: {
-    marginLeft: toDp(16),
-  },
   textName: {
     fontSize: toDp(18),
     color: 'white',
@@ -185,18 +220,6 @@ const styles = StyleSheet.create({
     fontSize: toDp(14),
     color: '#787878',
     marginRight: toDp(16)
-  },
-  touchMore: {
-    width: 'auto',
-    height: toDp(24),
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
-  icMore: {
-    width: toDp(20),
-    height: toDp(20),
-    tintColor: 'white'
   },
   viewContent: {
     marginTop: toDp(16),
@@ -359,7 +382,7 @@ const styles = StyleSheet.create({
     height: 'auto',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     marginBottom: toDp(36)
   },
   logoHeader: {
@@ -379,14 +402,36 @@ const styles = StyleSheet.create({
   },
   fab: {
     width: toDp(64),
-    height: toDp(64)
+    height: toDp(64),
+
   },
   viewSpace: {
     width: width * 0.8,
     justifyContent: 'space-between',
     flexDirection: 'row',
     alignItems: 'center',
-  }
+  },
+  viewNameDate: {
+    justifyContent: 'center',
+    marginLeft: toDp(16),
+  },
+  imageUrl: {
+    width: toDp(48),
+    height: toDp(48),
+    borderRadius: toDp(24),
+    marginTop: toDp(4)
+  },
+  touchMore: {
+    width: toDp(48),
+    height: toDp(48),
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  icMore: {
+    width: toDp(24),
+    height: toDp(24),
+    tintColor: 'white'
+  },
 
 
 })

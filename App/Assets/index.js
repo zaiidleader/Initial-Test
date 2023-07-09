@@ -27,6 +27,7 @@ const allLogo = {
   icPlus: require('./img/ic_plus.png'),
   icMoreVertical: require('./img/ic_more_vertical.png'),
   icBack: require('./img/ic_back.png'),
+  logo: require('./img/logo.png'),
 
 }
 
