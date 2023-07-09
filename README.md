@@ -1,6 +1,7 @@
 # React Native SDE Mini Project
 
-Make an ReactNative app to demonstrate the following requirements: This is an social media application that can post a text information to internet anonymously and let the community engage that post, we will call it Postr
+Make an ReactNative app to demonstrate the following requirements:
+<br />This is an social media application that can post a text information to internet anonymously and let the community engage that post, we will call it Postr
 
 ## Requirements
 
@@ -56,10 +57,10 @@ In Progress
 
 
 Thank You
-<br />
-Best Regards
+<br /><br />
+Best Regards<br />
 Zaini Jamathsani
-<br />
+<br /><br />
 Mobile Apps Developer<br />
 Email : dleader.zaii@gmail.com<br />
 Phone : +6285694084870
