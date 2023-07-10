@@ -62,8 +62,10 @@ https://drive.google.com/file/d/1ga4KxaXdZmYgisVZO-kvat5Qzyl49hwD/view?usp=shari
 
 
 ## Demo Video
-![](Video.mp4)
-
+<video height="400" controls>
+  <source src="Video.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
 Thank You
 <br /><br />
