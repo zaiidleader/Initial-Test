@@ -58,14 +58,14 @@ https://drive.google.com/file/d/1ga4KxaXdZmYgisVZO-kvat5Qzyl49hwD/view?usp=shari
 
 
 ## Screenshots
-<img src='https://i.ibb.co/rtsCZYb/Screenshot.png' width=800/>  
+![Screenshot](https://github.com/zaiidleader/Initial-Test/assets/1024623/786930f2-f8af-49a0-8c1f-1a9351e4c0fc)
 
 
 ## Demo Video
-<video height="400" controls>
-  <source src="Video.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+https://github.com/zaiidleader/Initial-Test/assets/1024623/034d8854-94a7-4013-b1ca-c9757ee21a00
+
+
+
 
 Thank You
 <br /><br />
