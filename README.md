@@ -62,10 +62,9 @@ https://drive.google.com/file/d/1ga4KxaXdZmYgisVZO-kvat5Qzyl49hwD/view?usp=shari
 
 
 ## Demo Video
-<video height="400" controls>
-  <source src="Video.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+![Screenshot](https://github.com/zaiidleader/Initial-Test/assets/1024623/786930f2-f8af-49a0-8c1f-1a9351e4c0fc)
+
+
 
 Thank You
 <br /><br />
